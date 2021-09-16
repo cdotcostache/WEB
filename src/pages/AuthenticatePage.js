@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import image1 from '../assets/images/1.jpg'
-import image2 from '../assets/images/2.jpg'
-import image3 from '../assets/images/3.jpg'
+import React, { useState } from 'react'
+import styled from 'styled-components/macro'
 import { device } from '../constants/deviceSize'
+
+// components import
+import SubmitButton from '../common/components/SubmitButton'
+import InputField from '../common/components/InputField'
+import ImageCarousel from '../common/components/ImageCarousel'
 
 const AuthenticatePage = () => {
   const [signUpMode, setSignUpMode] = useState(false)
-  const [carouselImageIndex, setCarouselImageIndex] = useState(1)
   const text = {
     snkrsMarket: 'snkrs.market',
     welcomeBack: 'welcome back',
@@ -30,15 +31,6 @@ const AuthenticatePage = () => {
     privacyPolicy: 'Privacy Policy',
   }
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCarouselImageIndex(
-        carouselImageIndex + 1 > 3 ? 1 : carouselImageIndex + 1
-      )
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [carouselImageIndex])
-
   return (
     <Main>
       <Box>
@@ -58,29 +50,10 @@ const AuthenticatePage = () => {
                   </h6>
                 </Heading>
 
-                <InputWrap>
-                  <InputField
-                    type='text'
-                    minLength='4'
-                    autocomplete='off'
-                    required
-                    placeholder=''
-                  />
-                  <InputLabel>{text.emailFieldLabel}</InputLabel>
-                </InputWrap>
+                <InputField label={text.emailFieldLabel} />
+                <InputField type='password' label={text.passwordFieldLabel} />
 
-                <InputWrap>
-                  <InputField
-                    type='password'
-                    minLength='4'
-                    autocomplete='off'
-                    placeholder=''
-                    required
-                  />
-                  <InputLabel>{text.passwordFieldLabel}</InputLabel>
-                </InputWrap>
-
-                <SignBtn type='submit' value={text.signInButton} />
+                <SubmitButton value={text.signInButton} />
 
                 <Text>
                   {text.forgottenPassword}
@@ -103,40 +76,12 @@ const AuthenticatePage = () => {
                     </span>
                   </h6>
                 </Heading>
-                <InputWrap>
-                  <InputField
-                    type='text'
-                    minLength='4'
-                    autocomplete='off'
-                    required
-                    placeholder=''
-                  />
-                  <InputLabel>{text.nameFieldLabel}</InputLabel>
-                </InputWrap>
 
-                <InputWrap>
-                  <InputField
-                    type='email'
-                    minLength='4'
-                    autocomplete='off'
-                    required
-                    placeholder=''
-                  />
-                  <InputLabel>{text.emailFieldLabel}</InputLabel>
-                </InputWrap>
+                <InputField label={text.nameFieldLabel} />
+                <InputField type='email' label={text.emailFieldLabel} />
+                <InputField type='password' label={text.passwordFieldLabel} />
 
-                <InputWrap>
-                  <InputField
-                    type='password'
-                    minLength='4'
-                    autocomplete='off'
-                    placeholder=''
-                    required
-                  ></InputField>
-                  <InputLabel>{text.passwordFieldLabel}</InputLabel>
-                </InputWrap>
-
-                <SignBtn type='submit' value={text.signUpButton} />
+                <SubmitButton value={text.signUpButton} />
 
                 <Text>
                   {text.bySigningUpIAgree}
@@ -148,49 +93,7 @@ const AuthenticatePage = () => {
             </SignUpForm>
           </FormsWrap>
 
-          <Carousel signUpMode={signUpMode}>
-            <ImagesWrapper>
-              <ImageOne
-                src={image1}
-                alt='1'
-                isActive={carouselImageIndex === 1 ? true : false}
-              />
-              <ImageTwo
-                src={image2}
-                alt='2'
-                isActive={carouselImageIndex === 2 ? true : false}
-              />
-              <ImageThree
-                src={image3}
-                alt='3'
-                isActive={carouselImageIndex === 3 ? true : false}
-              />
-            </ImagesWrapper>
-            <TextSlider>
-              <TextWrap>
-                <TextGroup isActive={carouselImageIndex}>
-                  <h2>buy / sell / trade</h2>
-                  <h2>legit check / authentication</h2>
-                  <h2>show off your collection</h2>
-                </TextGroup>
-              </TextWrap>
-
-              <Bullets>
-                <Bullet
-                  isActive={carouselImageIndex === 1 ? true : false}
-                  onClick={() => setCarouselImageIndex(1)}
-                />
-                <Bullet
-                  isActive={carouselImageIndex === 2 ? true : false}
-                  onClick={() => setCarouselImageIndex(2)}
-                />
-                <Bullet
-                  isActive={carouselImageIndex === 3 ? true : false}
-                  onClick={() => setCarouselImageIndex(3)}
-                />
-              </Bullets>
-            </TextSlider>
-          </Carousel>
+          <ImageCarousel signUpMode={signUpMode} />
         </InnerBox>
       </Box>
     </Main>
@@ -201,7 +104,7 @@ const Main = styled.main`
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background: #151111;
+  background: ${(props) => props.theme.colorPrimary};
   padding: 2rem;
   display: flex;
   align-items: center;
@@ -217,7 +120,7 @@ const Box = styled.div`
   width: 100%;
   max-width: 102rem;
   height: 55rem;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.colorWhite};
   border-radius: 3.3rem;
   box-shadow: 0 6rem 4rem -3rem rgba(0, 0, 0, 0.2);
 
@@ -329,7 +232,7 @@ const SignUpForm = styled.form`
 
 const Logo = styled.h4`
   font-size: 1.1rem;
-  color: #151111;
+  color: ${(props) => props.theme.colorPrimary};
 `
 const Heading = styled.div`
   margin-bottom: 2rem;
@@ -337,24 +240,24 @@ const Heading = styled.div`
   h2 {
     font-size: 2.1rem;
     font-weight: 600;
-    color: #151111;
+    color: ${(props) => props.theme.colorPrimary};
   }
 
   h6 {
     font-size: 0.75rem;
     font-weight: 400;
-    color: #bababa;
+    color: ${(props) => props.theme.colorTertiary};
     display: inline;
 
     span {
       cursor: pointer;
-      color: #151111;
+      color: ${(props) => props.theme.colorPrimary};
       font-size: 0.75rem;
       font-weight: 500;
       transition: 0.3s;
 
       &:hover {
-        color: #f4c430;
+        color: ${(props) => props.theme.colorSecondary};
       }
     }
   }
@@ -366,64 +269,8 @@ const Heading = styled.div`
 `
 const ActualForm = styled.div``
 
-const InputWrap = styled.div`
-  position: relative;
-  height: 3.7rem;
-  margin-bottom: 2rem;
-`
-const InputField = styled.input`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: none;
-  border: none;
-  outline: none;
-  border-bottom: 1px solid #bbb;
-  padding: 0;
-  font-size: 0.95rem;
-  color: #151111;
-  transition: 0.3s;
-
-  &:focus {
-    border-bottom-color: #151111;
-  }
-`
-
-const InputLabel = styled.label`
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.95rem;
-  color: #bbb;
-  pointer-events: none;
-  transition: 0.3s;
-
-  ${InputField}:not(:placeholder-shown) ~ & {
-    font-size: 0.75rem;
-    top: -0.2rem;
-  }
-`
-const SignBtn = styled.input`
-  display: inline-block;
-  width: 100%;
-  height: 4.3rem;
-  background-color: #151111;
-  color: #fff;
-  cursor: pointer;
-  border: none;
-  border-radius: 0.8rem;
-  margin-bottom: 2rem;
-  transition: 0.3s;
-
-  &:hover {
-    border: 1px solid rgba(8, 7, 7, 0.4);
-    background-color: #fff;
-    color: #151111;
-  }
-`
 const Text = styled.p`
-  color: #bbb;
+  color: ${(props) => props.theme.colorTertiary};
   font-size: 0.7rem;
 
   span {
@@ -432,133 +279,9 @@ const Text = styled.p`
     text-decoration: underline;
 
     &:hover {
-      color: #f4c430;
+      color: ${(props) => props.theme.colorSecondary};
     }
   }
-`
-
-const Carousel = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 55%;
-  top: 0;
-
-  border-radius: 2rem;
-  transition: 0.8s ease-in-out;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  padding-bottom: 2rem;
-  overflow: hidden;
-  left: ${({ signUpMode }) => (signUpMode ? '0%' : '45%')};
-
-  @media ${device.laptop} {
-    position: revert;
-    height: auto;
-    width: 100%;
-    /* padding: 1rem 2rem; */
-    display: flex;
-  }
-
-  @media ${device.mobileL} {
-    padding: 1.5rem 1rem;
-    border-radius: 1.6rem;
-  }
-`
-
-const ImagesWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-
-  @media ${device.laptop} {
-    display: none;
-  }
-`
-
-const TextSlider = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  @media ${device.laptop} {
-    width: 100%;
-  }
-`
-
-const TextWrap = styled.div`
-  max-height: 1.8rem;
-  overflow: hidden;
-  margin: 1.6rem 0;
-
-  h2 {
-    line-height: 1.8rem;
-    font-weight: 600;
-    font-size: 1.2rem;
-  }
-
-  @media ${device.mobileL} {
-    /* margin-bottom: 1rem; */
-    margin: 0;
-  }
-`
-
-const TextGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  transform: ${({ isActive }) => `translateY(${-(isActive - 1) * 1.8}rem)`};
-  transition: 0.5s;
-  h2 {
-    @media ${device.mobileL} {
-      font-size: 1.2rem;
-    }
-  }
-`
-
-const Bullets = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const Bullet = styled.span`
-  display: block;
-  width: ${({ isActive }) => (isActive ? '1.4rem' : '0.8rem')};
-  height: 0.8rem;
-  background-color: ${({ isActive }) => (isActive ? '#151111' : '#bbb')};
-  margin: 0 0.25rem;
-  border-radius: ${({ isActive }) => (isActive ? '1rem' : '50%')};
-  cursor: pointer;
-  transition: 0.3s;
-`
-
-const Image = styled.img`
-  width: 100%;
-  height: 65vh;
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-  opacity: 0;
-  transition: opacity 2s, transform 0.5s;
-  object-fit: cover;
-  border-radius: 2rem;
-`
-
-const ImageOne = styled(Image)`
-  opacity: ${({ isActive }) => (isActive ? '1' : '0')};
-  /* transform: ${({ isActive }) =>
-    isActive ? 'none' : 'translate(0, -5rem)'}; */
-`
-
-const ImageTwo = styled(Image)`
-  opacity: ${({ isActive }) => (isActive ? '1' : '0')};
-  /* transform: ${({ isActive }) => (isActive ? 'none' : 'scale(0.4, 0.5)')}; */
-`
-
-const ImageThree = styled(Image)`
-  opacity: ${({ isActive }) => (isActive ? '1' : '0')};
-  /* transform: ${({ isActive }) =>
-    isActive ? 'none' : 'scale(0.3) rotate(-20deg)'}; */
 `
 
 export default AuthenticatePage
