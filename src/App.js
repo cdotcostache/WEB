@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import GlobalStyle from './globalStyles'
+import GlobalStyle from './utils/globalStyles'
 import routes from './routes/routes'
 
 const App = () => {

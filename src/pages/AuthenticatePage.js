@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import image1 from '../assets/images/1.jpg'
 import image2 from '../assets/images/2.jpg'
@@ -10,7 +10,7 @@ const AuthenticatePage = () => {
   const [carouselImageIndex, setCarouselImageIndex] = useState(1)
   const text = {
     snkrsMarket: 'snkrs.market',
-    welcomeBack: 'Welcome back',
+    welcomeBack: 'welcome back',
     notRegisteredYet: 'Not registered yet? ',
     signUp: 'Sign up',
     nameFieldLabel: 'Name',
@@ -19,16 +19,26 @@ const AuthenticatePage = () => {
     forgottenPassword: 'Forgotten your password or your login details? ',
     getHelpAction: 'Get help',
     getHelpSigningIn: ' signing in.',
-    getStarted: 'Get started',
+    getStarted: 'get started',
     alreadyHaveAnAccount: 'Already have an account? ',
     signIn: 'Sign in',
-    emailFieldLabel: 'Email address',
+    emailFieldLabel: 'Email',
     signUpButton: 'Sign up',
     bySigningUpIAgree: 'By signing up, I agree to the ',
     termsOfService: 'Terms of Service',
     and: ' and ',
     privacyPolicy: 'Privacy Policy',
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCarouselImageIndex(
+        carouselImageIndex + 1 > 3 ? 1 : carouselImageIndex + 1
+      )
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [carouselImageIndex])
+
   return (
     <Main>
       <Box>
@@ -37,15 +47,17 @@ const AuthenticatePage = () => {
             <SignInForm autocomplete='off' signUpMode={signUpMode}>
               <Logo>{text.snkrsMarket}</Logo>
 
-              <Heading>
-                <h2>{text.welcomeBack}</h2>
-                <h6>
-                  {text.notRegisteredYet}
-                  <span onClick={() => setSignUpMode(true)}>{text.signUp}</span>
-                </h6>
-              </Heading>
-
               <ActualForm>
+                <Heading>
+                  <h2>{text.welcomeBack}</h2>
+                  <h6>
+                    {text.notRegisteredYet}
+                    <span onClick={() => setSignUpMode(true)}>
+                      {text.signUp}
+                    </span>
+                  </h6>
+                </Heading>
+
                 <InputWrap>
                   <InputField
                     type='text'
@@ -53,8 +65,8 @@ const AuthenticatePage = () => {
                     autocomplete='off'
                     required
                     placeholder=''
-                  ></InputField>
-                  <InputLabel>{text.nameFieldLabel}</InputLabel>
+                  />
+                  <InputLabel>{text.emailFieldLabel}</InputLabel>
                 </InputWrap>
 
                 <InputWrap>
@@ -64,7 +76,7 @@ const AuthenticatePage = () => {
                     autocomplete='off'
                     placeholder=''
                     required
-                  ></InputField>
+                  />
                   <InputLabel>{text.passwordFieldLabel}</InputLabel>
                 </InputWrap>
 
@@ -81,17 +93,16 @@ const AuthenticatePage = () => {
             <SignUpForm autocomplete='off' signUpMode={signUpMode}>
               <Logo>{text.snkrsMarket}</Logo>
 
-              <Heading>
-                <h2>{text.getStarted}</h2>
-                <h6>
-                  {text.alreadyHaveAnAccount}
-                  <span onClick={() => setSignUpMode(false)}>
-                    {text.signIn}
-                  </span>
-                </h6>
-              </Heading>
-
               <ActualForm>
+                <Heading>
+                  <h2>{text.getStarted}</h2>
+                  <h6>
+                    {text.alreadyHaveAnAccount}
+                    <span onClick={() => setSignUpMode(false)}>
+                      {text.signIn}
+                    </span>
+                  </h6>
+                </Heading>
                 <InputWrap>
                   <InputField
                     type='text'
@@ -99,7 +110,7 @@ const AuthenticatePage = () => {
                     autocomplete='off'
                     required
                     placeholder=''
-                  ></InputField>
+                  />
                   <InputLabel>{text.nameFieldLabel}</InputLabel>
                 </InputWrap>
 
@@ -110,7 +121,7 @@ const AuthenticatePage = () => {
                     autocomplete='off'
                     required
                     placeholder=''
-                  ></InputField>
+                  />
                   <InputLabel>{text.emailFieldLabel}</InputLabel>
                 </InputWrap>
 
@@ -136,6 +147,7 @@ const AuthenticatePage = () => {
               </ActualForm>
             </SignUpForm>
           </FormsWrap>
+
           <Carousel signUpMode={signUpMode}>
             <ImagesWrapper>
               <ImageOne
@@ -157,9 +169,9 @@ const AuthenticatePage = () => {
             <TextSlider>
               <TextWrap>
                 <TextGroup isActive={carouselImageIndex}>
-                  <h2>Find your desired snkrs</h2>
-                  <h2>Customize snkrs as you like</h2>
-                  <h2>Invite your friends to snkrs</h2>
+                  <h2>buy / sell / trade</h2>
+                  <h2>legit check / authentication</h2>
+                  <h2>show off your collection</h2>
                 </TextGroup>
               </TextWrap>
 
@@ -204,7 +216,7 @@ const Box = styled.div`
   position: relative;
   width: 100%;
   max-width: 102rem;
-  height: 64rem;
+  height: 55rem;
   background-color: #fff;
   border-radius: 3.3rem;
   box-shadow: 0 6rem 4rem -3rem rgba(0, 0, 0, 0.2);
@@ -320,6 +332,8 @@ const Logo = styled.h4`
   color: #151111;
 `
 const Heading = styled.div`
+  margin-bottom: 2rem;
+
   h2 {
     font-size: 2.1rem;
     font-weight: 600;
@@ -340,7 +354,7 @@ const Heading = styled.div`
       transition: 0.3s;
 
       &:hover {
-        color: #8371fd;
+        color: #f4c430;
       }
     }
   }
@@ -418,7 +432,7 @@ const Text = styled.p`
     text-decoration: underline;
 
     &:hover {
-      color: #8371fd;
+      color: #f4c430;
     }
   }
 `
@@ -428,7 +442,7 @@ const Carousel = styled.div`
   height: 100%;
   width: 55%;
   top: 0;
-  background-color: #faed26;
+
   border-radius: 2rem;
   transition: 0.8s ease-in-out;
   display: grid;
@@ -441,7 +455,7 @@ const Carousel = styled.div`
     position: revert;
     height: auto;
     width: 100%;
-    padding: 3rem 2rem;
+    /* padding: 1rem 2rem; */
     display: flex;
   }
 
@@ -475,16 +489,17 @@ const TextSlider = styled.div`
 const TextWrap = styled.div`
   max-height: 1.8rem;
   overflow: hidden;
-  margin-bottom: 2.5rem;
+  margin: 1.6rem 0;
 
   h2 {
     line-height: 1.8rem;
     font-weight: 600;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
   }
 
   @media ${device.mobileL} {
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
+    margin: 0;
   }
 `
 
@@ -511,7 +526,7 @@ const Bullet = styled.span`
   display: block;
   width: ${({ isActive }) => (isActive ? '1.4rem' : '0.8rem')};
   height: 0.8rem;
-  background-color: ${({ isActive }) => (isActive ? '#151111' : '#fff')};
+  background-color: ${({ isActive }) => (isActive ? '#151111' : '#bbb')};
   margin: 0 0.25rem;
   border-radius: ${({ isActive }) => (isActive ? '1rem' : '50%')};
   cursor: pointer;
@@ -520,26 +535,30 @@ const Bullet = styled.span`
 
 const Image = styled.img`
   width: 100%;
+  height: 65vh;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
   opacity: 0;
-  transition: opacity 0.3s, transform 0.5s;
+  transition: opacity 2s, transform 0.5s;
+  object-fit: cover;
+  border-radius: 2rem;
 `
 
 const ImageOne = styled(Image)`
   opacity: ${({ isActive }) => (isActive ? '1' : '0')};
-  transform: ${({ isActive }) => (isActive ? 'none' : 'translate(0, -5rem)')};
+  /* transform: ${({ isActive }) =>
+    isActive ? 'none' : 'translate(0, -5rem)'}; */
 `
 
 const ImageTwo = styled(Image)`
   opacity: ${({ isActive }) => (isActive ? '1' : '0')};
-  transform: ${({ isActive }) => (isActive ? 'none' : 'scale(0.4, 0.5)')};
+  /* transform: ${({ isActive }) => (isActive ? 'none' : 'scale(0.4, 0.5)')}; */
 `
 
 const ImageThree = styled(Image)`
   opacity: ${({ isActive }) => (isActive ? '1' : '0')};
-  transform: ${({ isActive }) =>
-    isActive ? 'none' : 'scale(0.3) rotate(-20deg)'};
+  /* transform: ${({ isActive }) =>
+    isActive ? 'none' : 'scale(0.3) rotate(-20deg)'}; */
 `
 
 export default AuthenticatePage

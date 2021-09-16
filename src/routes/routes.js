@@ -8,7 +8,7 @@ const routes = () => (
   <Router>
     <Nav />
     <Switch>
-      <Route exact path='/authenticate'>
+      <Route exact path='/welcome'>
         <AuthenticatePage />
       </Route>
       <Route path='/'>

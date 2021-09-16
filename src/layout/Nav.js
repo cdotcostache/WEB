@@ -5,7 +5,7 @@ const Nav = () => {
   return (
     <nav style={{ display: 'flex', justifyContent: 'space-between' }}>
       <Link to='/'>Dashboard</Link>
-      <Link to='/authenticate'>Login</Link>
+      <Link to='/welcome'>Login</Link>
     </nav>
   )
 }
