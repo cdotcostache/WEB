@@ -59,7 +59,7 @@ const SearchResults = styled.div`
   h3 {
     font-size: 1.2rem;
     line-height: 1.33;
-    color: #fff;
+    color: ${(props) => props.theme.colorWhite};
     text-transform: uppercase;
     padding: 1rem 3.5rem;
     animation: ${animation} ease-in-out 0.3s;
@@ -70,13 +70,13 @@ const SearchResults = styled.div`
   p {
     font-size: 1.2rem;
     padding: 0.8rem 6rem;
-    color: #fff;
+    color: ${(props) => props.theme.colorWhite};
     animation: ${animation} ease-in-out 0.3s;
     animation-fill-mode: both;
     animation-delay: calc(var(--order) * 0.03s);
 
     &:hover {
-      background: #fff;
+      background: ${(props) => props.theme.colorWhite};
       cursor: pointer;
       color: var(--color-blue);
 
@@ -99,11 +99,11 @@ const Input = styled.input.attrs((props) => ({
   type: props.type || 'text',
   placeholder: props.placeholder || 'Search',
 }))`
-  background: #fff;
+  background: ${(props) => props.theme.colorWhite};
   width: 50rem;
   font-family: inherit;
   font-size: 1.1rem;
-  color: #151111;
+  color: ${(props) => props.theme.colorPrimary};
   outline: none;
   border: none;
   height: 3rem;
@@ -115,14 +115,14 @@ const Input = styled.input.attrs((props) => ({
   border-radius: 2rem;
 
   &::placeholder-shown {
-    color: #151111;
+    color: ${(props) => props.theme.colorPrimary};
   }
 `
 
 const StyledSearchIcon = styled(SearchIcon)`
   width: ${({ small }) => (small ? '1.6rem' : '1.8rem')};
   height: 4.4rem;
-  fill: #fff;
+  fill: ${(props) => props.theme.colorWhite};
   cursor: default;
   animation: ${animation} ease-in-out 0.4s;
   animation-fill-mode: both;
@@ -133,7 +133,7 @@ const StyledSearchIcon = styled(SearchIcon)`
 const StyledCloseIcon = styled(CloseIcon)`
   width: 1.6rem;
   height: 4.4rem;
-  fill: #fff;
+  fill: ${(props) => props.theme.colorWhite};
   cursor: pointer;
   animation: ${animation} ease-in-out 0.4s;
   animation-fill-mode: both;

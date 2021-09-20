@@ -1,47 +1,61 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components/macro'
+import { slide as Menu } from 'react-burger-menu'
+
+var styles = {
+  bmBurgerButton: {
+    position: 'fixed',
+    width: '36px',
+    height: '30px',
+    left: '36px',
+    top: '36px',
+  },
+  bmBurgerBars: {
+    background: '#373a47',
+  },
+  bmBurgerBarsHover: {
+    background: '#a90000',
+  },
+  bmCrossButton: {
+    height: '24px',
+    width: '24px',
+  },
+  bmCross: {
+    background: '#bdc3c7',
+  },
+  bmMenuWrap: {
+    position: 'fixed',
+    height: '100%',
+  },
+  bmMenu: {
+    background: '#373a47',
+    padding: '2.5em 1.5em 0',
+    fontSize: '1.15em',
+  },
+  bmMorphShape: {
+    fill: '#373a47',
+  },
+  bmItemList: {
+    color: '#b8b7ad',
+    padding: '0.8em',
+  },
+  bmItem: {
+    display: 'inline-block',
+  },
+  bmOverlay: {
+    background: 'rgba(0, 0, 0, 0.3)',
+  },
+}
 
 const MobileMenu = ({ isOpen, setIsOpen }) => {
   return (
-    <ButtonWrapper onClick={() => setIsOpen()} showMenu={isOpen}>
-      <Burger isOpen={isOpen}></Burger>
-    </ButtonWrapper>
+    <Menu isOpen={isOpen} styles={styles} left>
+      <h3>mobile menu item</h3>
+      <h3>mobile menu item</h3>
+      <h3>mobile menu item</h3>
+      <h3>mobile menu item</h3>
+    </Menu>
   )
 }
-
-const ButtonWrapper = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease-ease-in-out;
-  margin-left: 1rem;
-  top: ${(props) => (props.showMenu ? '0.8rem' : '')};
-`
-
-const Burger = styled.div`
-  width: 1.5rem;
-  height: 0.1rem;
-  background: #fff;
-  border-radius: 0.5rem;
-  transition: 0.2s ease-in-out;
-  transform: ${(props) => (props.isOpen ? 'rotate(45deg)' : 'none')};
-  margin-bottom: ${(props) => (!props.isOpen ? '0.8rem' : '0')};
-
-  &::before {
-    content: '';
-    position: absolute;
-    width: 1.5rem;
-    height: 0.1rem;
-    border-radius: 0.5rem;
-    background: #fff;
-    transition: 0.2s ease-in-out;
-    transform: ${(props) =>
-      props.isOpen ? 'rotate(270deg)' : 'translateY(0.5rem)'};
-  }
-`
 
 export default MobileMenu

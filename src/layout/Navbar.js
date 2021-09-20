@@ -4,12 +4,10 @@ import { Link, useLocation } from 'react-router-dom'
 
 //Components
 import SearchInput from '../common/components/SearchInput'
-import Bag from '../common/components/Bag'
 import MobileMenu from '../common/components/MobileMenu'
 
 //SVG
 import { ReactComponent as SearchIcon } from '../assets/images/loupe.svg'
-import { ReactComponent as BagIcon } from '../assets/images/shopping-bag.svg'
 
 //Custom hooks
 import useWindowDimensions from '../common/hooks/useWindowDimensions'
@@ -18,13 +16,7 @@ const Nav = () => {
   const location = useLocation()
   const [showSearch, setShowSearch] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
-  const [menuItems, setMenuItems] = useState([
-    'buy',
-    'sell',
-    'trade',
-    ,
-    'legit-check',
-  ])
+  const [menuItems, setMenuItems] = useState(['want to buy', 'want to sell'])
 
   const { height, width } = useWindowDimensions()
   const isMobile = width <= 767
@@ -39,8 +31,9 @@ const Nav = () => {
 
   const RenderMenuItems = (
     <StyledList small={isMobile} showMenu={showMenu}>
-      {!isMobile &&
-        menuItems.map((menuItem) => (
+      <StyledLogo to='/'>snkrs.market</StyledLogo>
+      <LinkContainer>
+        {menuItems.map((menuItem) => (
           <StyledListItem>
             <StyledLink
               to={`/${menuItem.replaceAll(' ', '-')}`}
@@ -53,25 +46,20 @@ const Nav = () => {
           </StyledListItem>
         ))}
 
-      {!isMobile && (
-        <Link to='/welcome'>
-          <GetStartedButton>Get started</GetStartedButton>
-        </Link>
-      )}
-
-      {!isMobile && (
         <StyledListItem onClick={() => toggleSearch()}>
           <StyledSearchIcon />
         </StyledListItem>
-      )}
 
-      {isMobile && (
-        <MobileMenu setIsOpen={() => toggleMenu()} isOpen={showMenu} />
-      )}
+        <Link to='/welcome'>
+          <GetStartedButton>Get started</GetStartedButton>
+        </Link>
+      </LinkContainer>
     </StyledList>
   )
 
-  return (
+  return isMobile ? (
+    <MobileMenu setIsOpen={() => toggleMenu()} isOpen={showMenu} />
+  ) : (
     <NavContainer showMenu={showMenu}>
       {showSearch ? (
         <SearchInput toggleSearch={() => toggleSearch()} />
@@ -96,10 +84,26 @@ const NavContainer = styled.nav`
 
 const StyledList = styled.ul`
   display: flex;
-  align-items: ${(props) => (props.showMenu ? '' : 'center')};
-  justify-content: ${(props) =>
-    props.small ? 'space-between' : 'space-around'};
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
+  max-width: 102rem;
+  margin: 0 2rem;
+`
+
+const StyledLogo = styled(Link)`
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #fff;
+  text-decoration: none;
+`
+
+const LinkContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 51rem;
 `
 
 const StyledListItem = styled.li`
@@ -115,14 +119,45 @@ const StyledLink = styled(Link)`
   font-size: 1.1rem;
   text-transform: uppercase;
   text-decoration: none;
-  font-style: ${({ isActive }) => (isActive ? 'italic' : 'normal')};
-  text-decoration-color: ${({ isActive }) =>
-    isActive ? '#fff' : 'transparent'};
-  transition: 0.3s;
-  display: inline-block;
+  position: relative;
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: -0.1rem;
+    display: block;
+    width: 100%;
+    height: 1px;
+    opacity: ${({ isActive }) => (isActive ? '1' : '0')};
+    background: ${(props) =>
+      props.isActive ? props.theme.colorTertiary : props.theme.colorWhite};
+    transition: 1.1s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  &::before {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  &::after {
+    transform-origin: right;
+    transition-delay: 0.25s;
+  }
 
   &:hover {
-    transform: scale(1.1);
+    &::before {
+      opacity: 1;
+      transform: scaleX(1);
+      transition-delay: 0.25s;
+    }
+
+    &::after {
+      opacity: 1;
+      transform: scaleX(0);
+      transition-delay: 0s;
+    }
   }
 `
 
