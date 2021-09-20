@@ -1,12 +1,12 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Nav from '../layout/Nav'
+import Navbar from '../layout/Navbar'
 import AuthenticatePage from '../pages/AuthenticatePage'
 import LandingPage from '../pages/LandingPage'
 
 const routes = () => (
   <Router>
-    <Nav />
+    <Navbar />
     <Switch>
       <Route exact path='/welcome'>
         <AuthenticatePage />

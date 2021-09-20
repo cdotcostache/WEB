@@ -6,6 +6,7 @@ import { device } from '../constants/deviceSize'
 import SubmitButton from '../common/components/SubmitButton'
 import InputField from '../common/components/InputField'
 import ImageCarousel from '../common/components/ImageCarousel'
+import { Link } from 'react-router-dom'
 
 const AuthenticatePage = () => {
   const [signUpMode, setSignUpMode] = useState(false)
@@ -37,7 +38,9 @@ const AuthenticatePage = () => {
         <InnerBox>
           <FormsWrap signUpMode={signUpMode}>
             <SignInForm autocomplete='off' signUpMode={signUpMode}>
-              <Logo>{text.snkrsMarket}</Logo>
+              <Logo>
+                <StyledLink to='/'>{text.snkrsMarket}</StyledLink>
+              </Logo>
 
               <ActualForm>
                 <Heading>
@@ -102,7 +105,7 @@ const AuthenticatePage = () => {
 
 const Main = styled.main`
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 4.4rem);
   overflow: hidden;
   background: ${(props) => props.theme.colorPrimary};
   padding: 2rem;
@@ -233,7 +236,20 @@ const SignUpForm = styled.form`
 const Logo = styled.h4`
   font-size: 1.1rem;
   color: ${(props) => props.theme.colorPrimary};
+  text-decoration: none;
 `
+
+const StyledLink = styled(Link)`
+  font-size: 1.1rem;
+  color: ${(props) => props.theme.colorPrimary};
+  text-decoration: none;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`
+
 const Heading = styled.div`
   margin-bottom: 2rem;
 
